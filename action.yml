@@ -1,4 +1,4 @@
-name: 'Build Proto Action'
+name: 'Build Proto'
 description: 'Setup and build protobuf files. Uses buf and protoc with gen dependencies.'
 author: 'Nick Aguilar'
 inputs:
