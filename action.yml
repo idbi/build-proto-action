@@ -2,6 +2,10 @@ name: 'Build Proto Action'
 description: 'Setup and build protobuf files. Uses buf and protoc with gen dependencies.'
 author: 'Nick Aguilar'
 inputs:
+  working-directory:
+    description: 'The directory to run the build in.'
+    required: false
+    default: '.'
   buf-version:
     description: 'Version of buf to use.'
     required: false
