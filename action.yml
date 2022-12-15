@@ -1,0 +1,19 @@
+name: 'Build Proto Action'
+description: 'Setup and build protobuf files. Uses buf and protoc with gen dependencies.'
+author: 'Nick Aguilar'
+inputs:
+  buf-version:
+    description: 'Version of buf to use.'
+    required: false
+    default: '0.57.0'
+  plugins:
+    description: 'List of plugins to use by protoc, separated by commas.'
+    required: false
+    default: 'go,go-grpc'
+  push:
+    required: false
+    description: 'If the result should be pushed to the repo.'
+    default: "false"
+runs:
+  using: 'composite'
+  main: 'dist/index.js'
