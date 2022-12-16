@@ -1,11 +1,13 @@
 version: v1
 plugins:
   - name: go
-    out: internal/proto
+    out: internal/proto/go
     opt: paths=source_relative
   - name: go-grpc
-    out: internal/proto
+    out: internal/proto/go
     opt: paths=source_relative,require_unimplemented_servers=true
   - name: validate
-    out: internal/proto
+    out: internal/proto/go
     opt: paths=source_relative,lang=go
+  - name: php
+    out: internal/proto/php

@@ -2,10 +2,14 @@ name: 'Build Proto Action'
 description: 'Setup and build protobuf files. Uses buf and protoc with gen dependencies.'
 author: 'Nick Aguilar'
 inputs:
-  working-dir:
+  context:
     description: 'The directory to run the build in.'
     required: false
     default: '.'
+  proto:
+    description: 'The directory to run the build in.'
+    required: false
+    default: 'api/proto'
   buf-version:
     description: 'Version of buf to use.'
     required: false
@@ -17,11 +21,7 @@ inputs:
   plugins:
     description: 'List of plugins to use by protoc, separated by commas.'
     required: false
-    default: 'go,go-grpc'
-  push:
-    required: false
-    description: 'If the result should be pushed to the repo.'
-    default: "false"
+    default: 'go,go-grpc,validate'
 runs:
   using: 'node16'
   main: 'dist/index.js'

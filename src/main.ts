@@ -1,4 +1,5 @@
 import { validateConfig } from "./validations";
+import { installPlugins } from "./plugins";
 
 const buf = require("./buf");
 const protoc = require("./protoc");
@@ -8,8 +9,14 @@ const core = require('@actions/core')
 
 async function run(): Promise<void> {
   try {
-    void installDependencies()
-    void validateConfig()
+    await validateConfig()
+    await installDependencies()
+
+    const plugins = core.getInput('plugins');
+    await installPlugins(plugins);
+
+    await buf.update();
+    await buf.run();
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }

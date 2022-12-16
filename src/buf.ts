@@ -1,5 +1,6 @@
 const core = require("@actions/core");
 const tc = require("@actions/tool-cache");
+const exec = require("@actions/exec");
 const fs = require("fs");
 const path = require("path");
 const os = require("./platform");
@@ -19,6 +20,22 @@ export const install = async (version: string) => {
 
   fs.chmodSync(path.join(toolPath, executableFileName), "777");
   core.addPath(toolPath);
+};
+
+export const update = async () => {
+  const context = core.getInput("context");
+  const options = {
+    cwd: context,
+  };
+  const proto = core.getInput("proto");
+  await exec.exec("buf", ["mod", "update", proto], options);
+};
+export const run = async () => {
+  const context = core.getInput("context");
+  const options = {
+    cwd: context,
+  };
+  await exec.exec("buf", ["generate"], options);
 };
 
 const download = async (version: string, platform: string, arch: string): Promise<Buffer> => {
