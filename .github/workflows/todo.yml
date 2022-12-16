@@ -27,6 +27,6 @@ jobs:
       - name: Run Issue Bot
         uses: derjuulsn/todo-issue@main
         with:
-          excludePattern: '^(vendor/)'
+          excludePattern: '^(dist/)'
         env:
           GITHUB_TOKEN: ${{ github.token }}

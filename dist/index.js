@@ -248,15 +248,7 @@ const installValidatePlugin = (version) => __awaiter(void 0, void 0, void 0, fun
 const installPHPPlugin = (version) => __awaiter(void 0, void 0, void 0, function* () {
     core.info("Installing php plugin");
     yield validate.validatePHPBin();
-    // const executableFileName = "protoc-gen-php";
-    // const cachedFileName = "protoc-gen-php";
-    //
-    // const url = `https://github.com/protocolbuffers/protobuf/releases/download/v${version}/protoc-${version}-${platform}-${arch}.zip`;
-    // const protoc = await tc.downloadTool(url);
-    // const protocFolder = await tc.extractZip(protoc);
-    // const protocFile = path.join(protocFolder, "bin", executableFileName);
-    //
-    // return tc.cacheFile(protocFile, cachedFileName, executableFileName, version, arch);
+    yield validate.validateComposerBin();
 });
 
 
