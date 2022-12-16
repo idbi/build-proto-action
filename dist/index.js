@@ -45,7 +45,7 @@ const download = (version, platform, arch) => __awaiter(void 0, void 0, void 0, 
 /***/ }),
 
 /***/ 3109:
-/***/ (function(__unused_webpack_module, __unused_webpack_exports, __nccwpck_require__) {
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
 
@@ -58,6 +58,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const validations_1 = __nccwpck_require__(4550);
 const buf = __nccwpck_require__(5296);
 const protoc = __nccwpck_require__(8875);
 const core = __nccwpck_require__(2186);
@@ -65,6 +67,7 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             void installDependencies();
+            void (0, validations_1.validateConfig)();
         }
         catch (error) {
             if (error instanceof Error)
@@ -159,6 +162,50 @@ const download = (version, platform, arch) => __awaiter(void 0, void 0, void 0, 
     return tc.cacheFile(protocFile, cachedFileName, executableFileName, version, arch);
 });
 exports.download = download;
+
+
+/***/ }),
+
+/***/ 4550:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.validateConfig = void 0;
+const core = __nccwpck_require__(2186);
+const fs = __nccwpck_require__(7147);
+const validateWorkingDir = () => __awaiter(void 0, void 0, void 0, function* () {
+    const workingDir = core.getInput("working-dir");
+    if (!fs.existsSync(workingDir)) {
+        throw new Error(`Working directory ${workingDir} does not exist`);
+    }
+});
+const validateBufConfig = () => __awaiter(void 0, void 0, void 0, function* () {
+    const workingDir = core.getInput("working-dir");
+    const bufWorkPath = `${workingDir}/buf.work.yaml`;
+    if (!fs.existsSync(bufWorkPath)) {
+        throw new Error(`buf.work.yaml not found in ${workingDir}`);
+    }
+    const bufGenPath = `${workingDir}/buf.gen.yaml`;
+    if (!fs.existsSync(bufGenPath)) {
+        throw new Error(`buf.gen.yaml not found in ${workingDir}`);
+    }
+});
+const validateConfig = () => __awaiter(void 0, void 0, void 0, function* () {
+    yield validateWorkingDir();
+    yield validateBufConfig();
+});
+exports.validateConfig = validateConfig;
 
 
 /***/ }),

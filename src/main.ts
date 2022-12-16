@@ -1,3 +1,5 @@
+import { validateConfig } from "./validations";
+
 const buf = require("./buf");
 const protoc = require("./protoc");
 
@@ -7,6 +9,7 @@ const core = require('@actions/core')
 async function run(): Promise<void> {
   try {
     void installDependencies()
+    void validateConfig()
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }
@@ -18,6 +21,7 @@ const installDependencies = async () => {
 
     const protocVersion = core.getInput('protoc-version');
     await protoc.install(protocVersion);
+
 
 }
 
