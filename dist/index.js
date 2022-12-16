@@ -6,6 +6,29 @@ require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 
 "use strict";
 
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -15,86 +38,52 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.run = exports.update = exports.install = void 0;
-const core = __nccwpck_require__(2186);
-const tc = __nccwpck_require__(7784);
-const exec = __nccwpck_require__(1514);
-const fs = __nccwpck_require__(7147);
-const path = __nccwpck_require__(1017);
-const os = __nccwpck_require__(9238);
-const cachedFileName = "buf";
-const executableFileName = "buf";
+const core_1 = __importDefault(__nccwpck_require__(2186));
+const tool_cache_1 = __importDefault(__nccwpck_require__(7784));
+const exec_1 = __importDefault(__nccwpck_require__(1514));
+const fs_1 = __importDefault(__nccwpck_require__(7147));
+const path_1 = __importDefault(__nccwpck_require__(1017));
+const os = __importStar(__nccwpck_require__(9238));
+const cachedFileName = 'buf';
+const executableFileName = 'buf';
 const install = (version) => __awaiter(void 0, void 0, void 0, function* () {
     const platform = os.platform();
     const arch = os.arch();
-    let toolPath = tc.find(executableFileName, version, arch);
+    let toolPath = tool_cache_1.default.find(executableFileName, version, arch);
     if (!toolPath) {
         toolPath = yield download(version, platform, arch);
     }
-    fs.chmodSync(path.join(toolPath, executableFileName), "777");
-    core.addPath(toolPath);
+    fs_1.default.chmodSync(path_1.default.join(toolPath, executableFileName), '777');
+    core_1.default.addPath(toolPath);
 });
 exports.install = install;
 const update = () => __awaiter(void 0, void 0, void 0, function* () {
-    const context = core.getInput("context");
+    const context = core_1.default.getInput('context');
     const options = {
-        cwd: context,
+        cwd: context
     };
-    const proto = core.getInput("proto");
-    yield exec.exec("buf", ["mod", "update", proto], options);
+    const proto = core_1.default.getInput('proto');
+    yield exec_1.default.exec('buf', ['mod', 'update', proto], options);
 });
 exports.update = update;
 const run = () => __awaiter(void 0, void 0, void 0, function* () {
-    const context = core.getInput("context");
+    const context = core_1.default.getInput('context');
     const options = {
-        cwd: context,
+        cwd: context
     };
-    yield exec.exec("buf", ["generate"], options);
+    yield exec_1.default.exec('buf', ['generate'], options);
 });
 exports.run = run;
 const download = (version, platform, arch) => __awaiter(void 0, void 0, void 0, function* () {
     const url = `https://github.com/bufbuild/buf/releases/download/v${version}/buf-${platform}-${arch}`;
-    const protoc = yield tc.downloadTool(url);
-    return tc.cacheFile(protoc, cachedFileName, executableFileName, version, arch);
+    const protoc = yield tool_cache_1.default.downloadTool(url);
+    return tool_cache_1.default.cacheFile(protoc, cachedFileName, executableFileName, version, arch);
 });
-
-
-/***/ }),
-
-/***/ 6805:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
-
-"use strict";
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.install = void 0;
-const core = __nccwpck_require__(2186);
-const tc = __nccwpck_require__(7784);
-const exec = __nccwpck_require__(1514);
-const fs = __nccwpck_require__(7147);
-const path = __nccwpck_require__(1017);
-const io = __nccwpck_require__(7436);
-const validate = __nccwpck_require__(4550);
-const install = () => __awaiter(void 0, void 0, void 0, function* () {
-    yield validate.validatePHPBin();
-    yield exec.exec("php", ["-r", "copy('https://getcomposer.org/installer', 'composer-setup.php');"]);
-    yield exec.exec("php", ["composer-setup.php"]);
-    yield exec.exec("php", ["-r", "unlink('composer-setup.php');"]);
-    yield io.mv("composer.phar", "composer");
-    fs.chmodSync("composer", "777");
-    core.addPath("composer");
-});
-exports.install = install;
 
 
 /***/ }),
@@ -104,6 +93,29 @@ exports.install = install;
 
 "use strict";
 
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -113,32 +125,35 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const validations_1 = __nccwpck_require__(4550);
 const plugins_1 = __nccwpck_require__(5594);
-const buf = __nccwpck_require__(5296);
-const protoc = __nccwpck_require__(8875);
-const core = __nccwpck_require__(2186);
+const buf = __importStar(__nccwpck_require__(5296));
+const protoc = __importStar(__nccwpck_require__(8875));
+const core_1 = __importDefault(__nccwpck_require__(2186));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             yield (0, validations_1.validateConfig)();
             yield installDependencies();
-            const plugins = core.getInput('plugins');
+            const plugins = core_1.default.getInput('plugins');
             yield (0, plugins_1.installPlugins)(plugins);
             yield buf.update();
             yield buf.run();
         }
         catch (error) {
             if (error instanceof Error)
-                core.setFailed(error.message);
+                core_1.default.setFailed(error.message);
         }
     });
 }
 const installDependencies = () => __awaiter(void 0, void 0, void 0, function* () {
-    const bufVersion = core.getInput('buf-version');
+    const bufVersion = core_1.default.getInput('buf-version');
     yield buf.install(bufVersion);
-    const protocVersion = core.getInput('protoc-version');
+    const protocVersion = core_1.default.getInput('protoc-version');
     yield protoc.install(protocVersion);
 });
 void run();
@@ -155,25 +170,25 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.arch = exports.platform = void 0;
 const platform = () => {
     // @ts-ignore
-    const platform = ({
-        "linux": "Linux",
-        "darwin": "Darwin"
-    })[process.platform];
-    if (!platform) {
+    const plat = {
+        linux: 'Linux',
+        darwin: 'Darwin'
+    }[process.platform];
+    if (!plat) {
         throw new Error(`Unsupported platform: ${process.platform}`);
     }
-    return platform;
+    return plat;
 };
 exports.platform = platform;
 const arch = () => {
     // @ts-ignore
-    const arch = ({
-        "x64": "x86_64"
-    })[process.arch];
-    if (!arch) {
+    const architecture = {
+        x64: 'x86_64'
+    }[process.arch];
+    if (!architecture) {
         throw new Error(`Unsupported architecture: ${process.arch}`);
     }
-    return arch;
+    return architecture;
 };
 exports.arch = arch;
 
@@ -185,6 +200,29 @@ exports.arch = arch;
 
 "use strict";
 
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -194,59 +232,65 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.installPlugins = void 0;
-const core = __nccwpck_require__(2186);
-const exec = __nccwpck_require__(1514);
-const tc = __nccwpck_require__(7784);
-const fs = __nccwpck_require__(7147);
-const path = __nccwpck_require__(1017);
-const os = __nccwpck_require__(9238);
-const validate = __nccwpck_require__(4550);
-const composer = __nccwpck_require__(6805);
+const core_1 = __importDefault(__nccwpck_require__(2186));
+const exec_1 = __importDefault(__nccwpck_require__(1514));
+const validate = __importStar(__nccwpck_require__(4550));
 const installPlugins = (list) => __awaiter(void 0, void 0, void 0, function* () {
-    const plugins = list.trim().split(",");
+    const plugins = list.trim().split(',');
     for (const plugin of plugins) {
         yield installPlugin(plugin);
     }
 });
 exports.installPlugins = installPlugins;
 const installPlugin = (plugin) => __awaiter(void 0, void 0, void 0, function* () {
-    const protocVer = core.getInput("protoc-version");
     switch (plugin) {
-        case "go-grpc":
-            yield installGoGRPCPlugin(protocVer);
+        case 'go-grpc':
+            yield installGoGRPCPlugin();
             break;
-        case "go":
-            yield installGoPlugin(protocVer);
+        case 'go':
+            yield installGoPlugin();
             break;
-        case "php":
-            yield installPHPPlugin(protocVer);
+        case 'php':
+            yield installPHPPlugin();
             break;
-        case "validate":
-            yield installValidatePlugin(protocVer);
+        case 'validate':
+            yield installValidatePlugin();
             break;
         default:
             throw new Error(`Plugin ${plugin} is not supported`);
     }
 });
-const installGoGRPCPlugin = (version) => __awaiter(void 0, void 0, void 0, function* () {
-    core.info("Installing go-grpc plugin");
+const installGoGRPCPlugin = () => __awaiter(void 0, void 0, void 0, function* () {
+    core_1.default.info('Installing go-grpc plugin');
     yield validate.validateGoBin();
-    yield exec.exec("go", ["install", "google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest"]);
+    yield exec_1.default.exec('go', [
+        'install',
+        'google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest'
+    ]);
 });
-const installGoPlugin = (version) => __awaiter(void 0, void 0, void 0, function* () {
-    core.info("Installing go plugin");
+const installGoPlugin = () => __awaiter(void 0, void 0, void 0, function* () {
+    core_1.default.info('Installing go plugin');
     yield validate.validateGoBin();
-    yield exec.exec("go", ["install", "google.golang.org/protobuf/cmd/protoc-gen-go@latest"]);
+    yield exec_1.default.exec('go', [
+        'install',
+        'google.golang.org/protobuf/cmd/protoc-gen-go@latest'
+    ]);
 });
-const installValidatePlugin = (version) => __awaiter(void 0, void 0, void 0, function* () {
-    core.info("Installing validate plugin");
+const installValidatePlugin = () => __awaiter(void 0, void 0, void 0, function* () {
+    core_1.default.info('Installing validate plugin');
     yield validate.validateGoBin();
-    yield exec.exec("go", ["install", "github.com/envoyproxy/protoc-gen-validate@latest"]);
+    yield exec_1.default.exec('go', [
+        'install',
+        'github.com/envoyproxy/protoc-gen-validate@latest'
+    ]);
 });
-const installPHPPlugin = (version) => __awaiter(void 0, void 0, void 0, function* () {
-    core.info("Installing php plugin");
+const installPHPPlugin = () => __awaiter(void 0, void 0, void 0, function* () {
+    core_1.default.info('Installing php plugin');
     yield validate.validatePHPBin();
     yield validate.validateComposerBin();
 });
@@ -259,6 +303,29 @@ const installPHPPlugin = (version) => __awaiter(void 0, void 0, void 0, function
 
 "use strict";
 
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -268,32 +335,35 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.download = exports.install = void 0;
-const core = __nccwpck_require__(2186);
-const tc = __nccwpck_require__(7784);
-const fs = __nccwpck_require__(7147);
-const path = __nccwpck_require__(1017);
-const os = __nccwpck_require__(9238);
-const cachedFileName = "protoc";
-const executableFileName = "protoc";
+const core_1 = __importDefault(__nccwpck_require__(2186));
+const tool_cache_1 = __importDefault(__nccwpck_require__(7784));
+const fs_1 = __importDefault(__nccwpck_require__(7147));
+const path_1 = __importDefault(__nccwpck_require__(1017));
+const os = __importStar(__nccwpck_require__(9238));
+const cachedFileName = 'protoc';
+const executableFileName = 'protoc';
 const install = (version) => __awaiter(void 0, void 0, void 0, function* () {
     const platform = os.platform();
     const arch = os.arch();
-    let toolPath = tc.find(executableFileName, version, arch);
+    let toolPath = tool_cache_1.default.find(executableFileName, version, arch);
     if (!toolPath) {
         toolPath = yield (0, exports.download)(version, platform, arch);
     }
-    fs.chmodSync(path.join(toolPath, executableFileName), "777");
-    core.addPath(toolPath);
+    fs_1.default.chmodSync(path_1.default.join(toolPath, executableFileName), '777');
+    core_1.default.addPath(toolPath);
 });
 exports.install = install;
 const download = (version, platform, arch) => __awaiter(void 0, void 0, void 0, function* () {
     const url = `https://github.com/protocolbuffers/protobuf/releases/download/v${version}/protoc-${version}-${platform}-${arch}.zip`;
-    const protoc = yield tc.downloadTool(url);
-    const protocFolder = yield tc.extractZip(protoc);
-    const protocFile = path.join(protocFolder, "bin", executableFileName);
-    return tc.cacheFile(protocFile, cachedFileName, executableFileName, version, arch);
+    const protoc = yield tool_cache_1.default.downloadTool(url);
+    const protocFolder = yield tool_cache_1.default.extractZip(protoc);
+    const protocFile = path_1.default.join(protocFolder, 'bin', executableFileName);
+    return tool_cache_1.default.cacheFile(protocFile, cachedFileName, executableFileName, version, arch);
 });
 exports.download = download;
 
@@ -314,45 +384,48 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.validateConfig = exports.validateComposerBin = exports.validatePHPBin = exports.validateGoBin = void 0;
-const core = __nccwpck_require__(2186);
-const io = __nccwpck_require__(7436);
-const fs = __nccwpck_require__(7147);
+const core_1 = __importDefault(__nccwpck_require__(2186));
+const io_1 = __importDefault(__nccwpck_require__(7436));
+const fs_1 = __importDefault(__nccwpck_require__(7147));
 const validateContext = () => __awaiter(void 0, void 0, void 0, function* () {
-    const context = core.getInput("context");
-    if (!fs.existsSync(context)) {
+    const context = core_1.default.getInput('context');
+    if (!fs_1.default.existsSync(context)) {
         throw new Error(`Working directory ${context} does not exist`);
     }
 });
 const validateBufConfig = () => __awaiter(void 0, void 0, void 0, function* () {
-    const context = core.getInput("context");
+    const context = core_1.default.getInput('context');
     const bufWorkPath = `${context}/buf.work.yaml`;
-    if (!fs.existsSync(bufWorkPath)) {
+    if (!fs_1.default.existsSync(bufWorkPath)) {
         throw new Error(`buf.work.yaml not found in ${context}`);
     }
     const bufGenPath = `${context}/buf.gen.yaml`;
-    if (!fs.existsSync(bufGenPath)) {
+    if (!fs_1.default.existsSync(bufGenPath)) {
         throw new Error(`buf.gen.yaml not found in ${context}`);
     }
 });
 const validateGoBin = () => __awaiter(void 0, void 0, void 0, function* () {
-    const goBin = yield io.which("go", true);
-    if (!fs.existsSync(goBin)) {
+    const goBin = yield io_1.default.which('go', true);
+    if (!fs_1.default.existsSync(goBin)) {
         throw new Error(`go-bin ${goBin} does not exist`);
     }
 });
 exports.validateGoBin = validateGoBin;
 const validatePHPBin = () => __awaiter(void 0, void 0, void 0, function* () {
-    const phpBin = yield io.which("php", true);
-    if (!fs.existsSync(phpBin)) {
+    const phpBin = yield io_1.default.which('php', true);
+    if (!fs_1.default.existsSync(phpBin)) {
         throw new Error(`php-bin ${phpBin} does not exist`);
     }
 });
 exports.validatePHPBin = validatePHPBin;
 const validateComposerBin = () => __awaiter(void 0, void 0, void 0, function* () {
-    const composerBin = yield io.which("composer", true);
-    if (!fs.existsSync(composerBin)) {
+    const composerBin = yield io_1.default.which('composer', true);
+    if (!fs_1.default.existsSync(composerBin)) {
         throw new Error(`composer-bin ${composerBin} does not exist`);
     }
 });

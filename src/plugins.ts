@@ -1,61 +1,62 @@
-const core = require("@actions/core");
-const exec = require("@actions/exec");
-const tc = require("@actions/tool-cache");
-const fs = require("fs");
-const path = require("path");
-const os = require("./platform");
-const validate = require("./validations");
-const composer = require("./composer");
+import core from '@actions/core'
+import exec from '@actions/exec'
+import * as validate from './validations'
 
-export const installPlugins = async (list: string) => {
-  const plugins = list.trim().split(",");
+export const installPlugins = async (list: string): Promise<void> => {
+  const plugins = list.trim().split(',')
   for (const plugin of plugins) {
-    await installPlugin(plugin);
+    await installPlugin(plugin)
   }
-};
+}
 
-const installPlugin = async (plugin: string) => {
-  const protocVer = core.getInput("protoc-version");
-
+const installPlugin = async (plugin: string): Promise<void> => {
   switch (plugin) {
-    case "go-grpc":
-      await installGoGRPCPlugin(protocVer);
-      break;
-    case "go":
-      await installGoPlugin(protocVer);
-      break;
-    case "php":
-      await installPHPPlugin(protocVer);
-      break;
-    case "validate":
-      await installValidatePlugin(protocVer);
-      break;
+    case 'go-grpc':
+      await installGoGRPCPlugin()
+      break
+    case 'go':
+      await installGoPlugin()
+      break
+    case 'php':
+      await installPHPPlugin()
+      break
+    case 'validate':
+      await installValidatePlugin()
+      break
     default:
-      throw new Error(`Plugin ${plugin} is not supported`);
+      throw new Error(`Plugin ${plugin} is not supported`)
   }
+}
 
-};
+const installGoGRPCPlugin = async (): Promise<void> => {
+  core.info('Installing go-grpc plugin')
+  await validate.validateGoBin()
+  await exec.exec('go', [
+    'install',
+    'google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest'
+  ])
+}
 
-const installGoGRPCPlugin = async (version: string) => {
-  core.info("Installing go-grpc plugin");
-  await validate.validateGoBin();
-  await exec.exec("go", ["install", "google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest"]);
-};
+const installGoPlugin = async (): Promise<void> => {
+  core.info('Installing go plugin')
+  await validate.validateGoBin()
+  await exec.exec('go', [
+    'install',
+    'google.golang.org/protobuf/cmd/protoc-gen-go@latest'
+  ])
+}
 
-const installGoPlugin = async (version: string) => {
-  core.info("Installing go plugin");
-  await validate.validateGoBin();
-  await exec.exec("go", ["install", "google.golang.org/protobuf/cmd/protoc-gen-go@latest"]);
-};
+const installValidatePlugin = async (): Promise<void> => {
+  core.info('Installing validate plugin')
+  await validate.validateGoBin()
+  await exec.exec('go', [
+    'install',
+    'github.com/envoyproxy/protoc-gen-validate@latest'
+  ])
+}
 
-const installValidatePlugin = async (version: string) => {
-  core.info("Installing validate plugin");
-  await validate.validateGoBin();
-  await exec.exec("go", ["install", "github.com/envoyproxy/protoc-gen-validate@latest"]);
-};
-
-const installPHPPlugin = async (version: string) => {
-  core.info("Installing php plugin");
-  await validate.validatePHPBin();
+const installPHPPlugin = async (): Promise<void> => {
+  core.info('Installing php plugin')
+  await validate.validatePHPBin()
   await validate.validateComposerBin()
-};
+}

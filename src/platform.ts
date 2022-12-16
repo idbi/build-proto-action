@@ -1,26 +1,26 @@
 export const platform = (): string => {
   // @ts-ignore
-  const platform = ({
-    "linux": "Linux",
-    "darwin": "Darwin"
-  })[process.platform];
+  const plat = {
+    linux: 'Linux',
+    darwin: 'Darwin'
+  }[process.platform]
 
-  if (!platform) {
-    throw new Error(`Unsupported platform: ${process.platform}`);
+  if (!plat) {
+    throw new Error(`Unsupported platform: ${process.platform}`)
   }
 
-  return platform;
-};
+  return plat
+}
 
 export const arch = (): string => {
   // @ts-ignore
-  const arch = ({
-    "x64": "x86_64"
-  })[process.arch];
+  const architecture = {
+    x64: 'x86_64'
+  }[process.arch]
 
-  if (!arch) {
-    throw new Error(`Unsupported architecture: ${process.arch}`);
+  if (!architecture) {
+    throw new Error(`Unsupported architecture: ${process.arch}`)
   }
 
-  return arch;
-};
+  return architecture
+}
