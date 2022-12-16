@@ -1,8 +1,8 @@
-import core from '@actions/core'
-import tc from '@actions/tool-cache'
-import exec from '@actions/exec'
-import fs from 'fs'
-import path from 'path'
+import * as core from '@actions/core'
+import * as tc from '@actions/tool-cache'
+import * as exec from '@actions/exec'
+import * as fs from 'fs'
+import * as path from 'path'
 import * as os from './platform'
 
 const cachedFileName = 'buf'

@@ -1,5 +1,5 @@
-import core from '@actions/core'
-import exec from '@actions/exec'
+import * as core from '@actions/core'
+import * as exec from '@actions/exec'
 import * as validate from './validations'
 
 export const installPlugins = async (list: string): Promise<void> => {

@@ -1,6 +1,6 @@
-import core from '@actions/core'
-import io from '@actions/io'
-import fs from 'fs'
+import * as core from '@actions/core'
+import * as io from '@actions/io'
+import * as fs from 'fs'
 
 const validateContext = async (): Promise<void> => {
   const context = core.getInput('context')

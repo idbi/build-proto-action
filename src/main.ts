@@ -1,10 +1,10 @@
-import {validateConfig} from './validations'
-import {installPlugins} from './plugins'
+import { validateConfig } from "./validations";
+import { installPlugins } from "./plugins";
 
-import * as buf from './buf'
-import * as protoc from './protoc'
+import * as buf from "./buf";
+import * as protoc from "./protoc";
 
-import core from '@actions/core'
+import * as core from "@actions/core";
 
 async function run(): Promise<void> {
   try {
@@ -22,11 +22,11 @@ async function run(): Promise<void> {
 }
 
 const installDependencies = async (): Promise<void> => {
-  const bufVersion = core.getInput('buf-version')
-  await buf.install(bufVersion)
+  const bufVersion = core.getInput("buf-version");
+  await buf.install(bufVersion);
 
-  const protocVersion = core.getInput('protoc-version')
-  await protoc.install(protocVersion)
-}
+  const protocVersion = core.getInput("protoc-version");
+  await protoc.install(protocVersion);
+};
 
-void run()
+void run();
