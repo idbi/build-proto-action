@@ -9,7 +9,11 @@ inputs:
   buf-version:
     description: 'Version of buf to use.'
     required: false
-    default: '0.57.0'
+    default: '1.10.0'
+  protoc-version:
+    description: 'Version of protoc to use.'
+    required: false
+    default: '21.12'
   plugins:
     description: 'List of plugins to use by protoc, separated by commas.'
     required: false

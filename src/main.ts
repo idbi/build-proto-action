@@ -1,17 +1,25 @@
-import * as core from '@actions/core'
+const buf = require("./buf");
+const protoc = require("./protoc");
+
+const core = require('@actions/core')
+
 
 async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`) // debug is only output if you set the secret `ACTIONS_STEP_DEBUG` to true
-
-    core.debug(new Date().toTimeString())
-    core.debug(new Date().toTimeString())
-
-    core.setOutput('time', new Date().toTimeString())
+    void installDependencies()
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }
 }
 
-run()
+const installDependencies = async () => {
+    const bufVersion = core.getInput('buf-version');
+    await buf.install(bufVersion);
+
+    const protocVersion = core.getInput('protoc-version');
+    await protoc.install(protocVersion);
+
+}
+
+
+void run()
